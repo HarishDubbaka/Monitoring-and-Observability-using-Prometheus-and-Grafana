@@ -218,7 +218,7 @@ It then:
 5. Visualizes data using tools like Grafana
 
 
-![Image Alt](image_url)
+![Image Alt](https://github.com/HarishDubbaka/Monitoring-and-Observability-using-Prometheus-and-Grafana/blob/864bb2cae1d96b678f67bb88a083ccce3a1c03de/Day02/prometheus-architecture.gif)
 
 
 ```
