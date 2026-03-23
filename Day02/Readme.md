@@ -221,32 +221,6 @@ It then:
 ![Image Alt](https://github.com/HarishDubbaka/Monitoring-and-Observability-using-Prometheus-and-Grafana/blob/864bb2cae1d96b678f67bb88a083ccce3a1c03de/Day02/prometheus-architecture.gif)
 
 
-```
-
-Applications / Exporters
-│
-▼
-Prometheus Server
-│
-▼
-Time Series Database
-│
-▼
-Alertmanager
-│
-▼
-Notifications (Slack / Email)
-
-```
-    │
-    ▼
-  Grafana
-```
-
-(Dashboards)
-
-```
-
 ---
 
 # 🧩 Components of Prometheus Architecture
