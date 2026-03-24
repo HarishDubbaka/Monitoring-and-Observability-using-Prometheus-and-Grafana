@@ -381,3 +381,68 @@ Download Prometheus:
 
 https://prometheus.io/download/
 
+---
+
+## Using Helm to Install Prometheus and Grafana
+
+Helm is a **package manager for Kubernetes** that simplifies deploying apps like Prometheus and Grafana.
+
+### 1️⃣ Add Helm Repositories
+
+Before installing, you add the official Helm charts:
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+```
+
+* `prometheus-community` → contains Prometheus Helm charts
+* `grafana` → contains Grafana Helm charts
+
+---
+
+### 2️⃣ Install Prometheus
+
+```bash
+helm install prometheus prometheus-community/prometheus \
+  --namespace monitoring --create-namespace
+```
+
+* `prometheus` → release name
+* `monitoring` → Kubernetes namespace
+* This deploys **Prometheus server, Alertmanager, and Node Exporter**
+
+**Verify installation:**
+
+```bash
+kubectl get pods -n monitoring
+```
+
+---
+
+### 3️⃣ Install Grafana
+
+```bash
+helm install grafana grafana/grafana \
+  --namespace monitoring
+```
+
+* This deploys Grafana connected to your Prometheus instance
+* Grafana dashboard URL can be accessed via:
+
+```bash
+kubectl port-forward svc/grafana 3000:80 -n monitoring
+```
+
+* Default login: `admin/admin` (you can change it later)
+
+---
+
+### ✅ Where Helm Was Used in Your Setup
+
+* **Prometheus Installation:** Helm chart `prometheus-community/prometheus` → scrapes metrics from nodes and apps
+* **Grafana Installation:** Helm chart `grafana/grafana` → visualizes Prometheus metrics
+
+Basically, Helm **automated the deployment** of Prometheus + Grafana in Kubernetes instead of manually creating all pods, services, and configs.
+
