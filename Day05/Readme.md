@@ -236,5 +236,53 @@ kubectl apply -f alertmanager-secret.yaml
 * Check for triggered alerts due to the test pod failures
 * Alerts will resolve automatically once the pod issues are fixed
 
+![Image Alt](image_url).
 
+---
+
+
+# 🔹 Why Alerts Still Might Not Fire
+
+Even though the Secret is configured, alerts won’t trigger unless:
+
+1. **PrometheusRule is active and loaded**
+
+   * `kubectl get prometheusrules -A`
+   * `kubectl describe prometheusrules kube-pod-not-ready`
+2. **Prometheus is scraping metrics**
+
+   * `kube-state-metrics` must be running
+   * Query metrics in Prometheus UI:
+
+     ```promql
+     kube_pod_status_phase{phase=~"Pending|Unknown|Failed"}
+     ```
+3. **Pods are actually unhealthy**
+
+   * `kubectl get pods -A`
+   * If pods are `Running`, no alert fires
+4. **Prometheus → Alertmanager communication works**
+
+   * Check Prometheus alerting rules in **Status → Rules**
+   * Active firing alerts should appear → then Alertmanager sends notifications
+
+---
+
+# 🔹 Quick Test to Verify Everything
+
+1. Create a pod that will fail:
+
+```bash
+kubectl run test-fail --image=nginx:doesnotexist
+```
+
+2. In Prometheus UI:
+
+```promql
+sum by(namespace,pod)(kube_pod_status_phase{phase=~"Pending|Unknown|Failed"}) > 0
+```
+
+* Should return `1` → alert **should fire**
+* Alertmanager UI should show **active alert**
+* Email notification should be sent if receiver is configured
 
