@@ -236,7 +236,7 @@ kubectl apply -f alertmanager-secret.yaml
 * Check for triggered alerts due to the test pod failures
 * Alerts will resolve automatically once the pod issues are fixed
 
-![Image Alt](image_url).
+![Image Alt](https://github.com/HarishDubbaka/Monitoring-and-Observability-using-Prometheus-and-Grafana/blob/472667f2bb9093c54418abf15a4464b8702394c7/Day05/gmailalert.png).
 
 ---
 
